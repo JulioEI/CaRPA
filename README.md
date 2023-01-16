@@ -163,48 +163,17 @@ If more than one stage is selected all the corresponding sessions will be proces
 
 ## 4. Carpa Outputs
 
-Traces_Events
-
-rawProb 
-time x neurons 
-maximum likelihood dfof of each neuron, given by the CELLMAX algorithm
-
-
-rawTraces
-time x neurons 
-dfof value of each neuron
-position
-time x coordinates
-detected tracker position.
-
-
-velocity
-time 
-absolute velocity
-
-
-tresholdEvents
-time x neurons 
-whether there is a spike at each time given by the thresholding algorithm method developed by Biafra:
-\miniscope_analysis-bahanonu-miniscopeAnalysisClass_18_08_17\signal_processing\computeSignalPeaks.m
-spikeDeconv
-time x neurons
-whether there is a spike at each time given by the spike deconvolution algorithm from Pnevmatikakis et al 2013. Bayesian spike inference from calcium imaging data 
-https://github.com/zhoupc/OASIS_matlab
-spikeML
-time x neurons
-whether there is a spike at each time given by the spikeML algorithm from :
-Deneux T, Kaszas A, Szalay G, Katona G, Lakner T, Grinvald A, et al. Accurate spike estimation from
-noisy calcium signals for ultrafast three-dimensional imaging of large neuronal populations in vivo. 2016
-https://github.com/MLspike/spikes
-spikeDeconvTrace
- time x neurons
-denoised df/f traces given by the spike deconvolution algorithm
-
-
-cellAnatomicLocat
-neurons x coordinate
-location of each neuron centroid
+|Variable Name | Dimensions | Description|
+|--------------|--------------|--------------|
+|rawProb | time x neurons  | maximum likelihood dfof of each neuron, given by the CELLMAX algorithm|
+| rawTraces| time x neurons | dfof value of each neuron |
+| position | time x coordinates | detected tracker position. |
+| velocity | time | absolute velocity |
+| tresholdEvents | time x neurons | whether there is a spike at each time given by the thresholding algorithm method developed by Biafra Bahanonu: \miniscope_analysis-bahanonu-miniscopeAnalysisClass_18_08_17\signal_processing\computeSignalPeaks.m | 
+|spikeDeconv | time x neurons | whether there is a spike at each time given by the spike deconvolution algorithm from Pnevmatikakis et al 2013. Bayesian spike inference from calcium imaging data https://github.com/zhoupc/OASIS_matlab |
+| spikeML | time x neurons | whether there is a spike at each time given by the spikeML algorithm from : Deneux T, Kaszas A, Szalay G, Katona G, Lakner T, Grinvald A, et al. Accurate spike estimation from noisy calcium signals for ultrafast three-dimensional imaging of large neuronal populations in vivo. 2016 https://github.com/MLspike/spikes | 
+| spikeDeconvTrace | time x neurons | denoised df/f traces given by the spike deconvolution algorithm |
+| cellAnatomicLocat | neurons x coordinate | location of each neuron centroid | 
 
 
 
