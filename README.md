@@ -134,6 +134,23 @@ If a single processing stage is selected a menu will pop up next, which allows t
 
 If more than one stage is selected all the corresponding sessions will be processed.
 
+## 3.1 Preprocess
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget purus urna. Integer vel viverra neque. Nullam felis massa, gravida tincidunt erat quis, porta elementum tellus. Nulla sit amet bibendum purus, vitae ultrices ipsum. In condimentum pellentesque nunc, a semper augue maximus sit amet. Suspendisse mauris leo, porta a tellus quis, mattis rutrum justo. Aenean vel vehicula mauris. Etiam pretium in felis sed porttitor. Suspendisse tincidunt turpis imperdiet faucibus laoreet. Praesent elementum erat vitae augue ultrices condimentum. 
+
+## 3.2 Extract
+Proin fringilla consectetur scelerisque. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam vulputate orci eget ex iaculis, id volutpat lectus consequat. Etiam sit amet nunc consequat, gravida velit sit amet, gravida felis. Etiam viverra nisi ut lobortis condimentum. Duis varius justo quam, et ultrices nisi viverra at. Curabitur sit amet pretium erat. Pellentesque ut arcu purus. 
+
+## 3.3 Filter
+
+Donec tristique condimentum metus. Proin volutpat consectetur dignissim. Vestibulum consequat pharetra dolor in suscipit. Nam accumsan nisl et sem eleifend, eget dapibus arcu iaculis. Donec semper rhoncus massa, cursus condimentum ipsum mattis vel. Integer imperdiet convallis lectus vel laoreet. Aliquam dignissim, mi nec vestibulum dapibus, tellus elit egestas purus, eget malesuada ipsum sapien vitae erat. Vestibulum at nunc porttitor, vehicula lorem vestibulum, aliquam lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam non bibendum augue, auctor scelerisque nisi. Vivamus nibh ligula, tincidunt quis vestibulum ac, semper vel turpis. Integer malesuada massa eu purus dapibus, id pretium ligula elementum. Fusce interdum, quam ac facilisis imperdiet, dui ligula tristique lorem, posuere vestibulum velit est vel ex. 
+
+ <img src="CARPA/_readmePics/filter.png" alt="Filter" width="500"/>
+
+## 3.4 Postprocess
+
+Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam mi nunc, laoreet at sem id, ultricies porta tellus. Sed vitae suscipit ante. Nunc placerat porta ante. Etiam vulputate volutpat turpis, quis convallis est tempor eget. Sed vel finibus est. Sed ut ipsum tortor. Aliquam ac lacus sem. Morbi vitae maximus dui. In hac habitasse platea dictumst. Pellentesque accumsan ipsum erat, tristique fringilla justo tincidunt ut. Donec congue hendrerit nisl, ac lobortis leo tincidunt nec. Quisque feugiat diam et mollis tempor. Sed a interdum orci, mattis venenatis tortor. Fusce ultricies dui non nunc malesuada, vitae convallis erat viverra. Fusce aliquam mauris nulla, sed vulputate mi euismod non. 
+
 ## 4. Carpa Outputs
 
 | Variable Name | Dimensions | Description|
