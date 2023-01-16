@@ -28,11 +28,10 @@ For working with a folder with calcium recordings, already sorted in folders. Th
 
 | 	      | ROOT FOLDER   →| DAY/EXPERIMENT FOLDER →| SESSION FILES |
 | ----------- | ----------- | ----------- | ----------- |
-
 |E.g. 	   | Mouse 5012	   | Mouse-5012-20150228-eightPorts 	        | concat_recording_20150228_114834.h5|
 |	   |		   |  					        | concat_recording_20150228_120021.h5|
 |     	   |               | Mouse-5012-20150228-linearTrack		| concat_recording_20150228_192756.h5|
-	   |		   | Mouse-5012-20150301-eightPorts 	        | concat_recording_20150301_114211.h5|
+|	   |		   | Mouse-5012-20150301-eightPorts 	        | concat_recording_20150301_114211.h5|
 |	   |	           |					        | concat_recording_20150301_115923.h5|
 
 		
