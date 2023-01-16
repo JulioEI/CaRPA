@@ -24,7 +24,7 @@ A menu will show up, listing several options:
 
 ### 1.1. Work on an existing animal:
 		
-To pick up the processing of an existing folder. The file structure that CaRPA works with is a root folder on top, then the folders for individual days/animals/experiment sessions, with the files for these sessions (e.g., the h5 files) inside.
+Click on this to continue the processing of an existing folder. The file structure that CaRPA works with is a root folder on top, then the folders for individual days/animals/experiment sessions, with the files for these sessions (e.g., the h5 files) inside.
 
 
 | 	      | ROOT FOLDER | ANIMAL/DAY/EXPERIMENT FOLDER | SESSION FILES |
@@ -56,9 +56,9 @@ carp.setExperimentNames;
 ```
 
 
-### 1.2. Create file structure for a new animal
+### 1.2. Create file structure for a new root folder
 
-Creates the file structure described in the previous point from a folder with several calcium_recording files. For this to work properly, the first number sequence in the file name should correspond to the day of the recording, e.g.  concat_recording_20150228_192756.h5
+Click on this to start processign of a new root folder. Creates the file structure described in the previous point from a folder with several calcium_recording files. For this to work properly, the first number sequence in the file name should correspond to the day of the recording, e.g.  concat_recording_20150228_192756.h5
 
 **IMPORTANT:**
 
@@ -67,7 +67,7 @@ Creates the file structure described in the previous point from a folder with se
 
 ### 1.3. Download files from server
 
-Allows to download one or more sessions of an animal directly from the cluster. The path of the server is defined by the archiveRawCaPath property. To change it use the command:
+Use this if your files are in a remote cluster. The path of the server is defined by the archiveRawCaPath property. To change it use the command:
 
 ```
 carp.archiveRawCaPath = ‘‘C://new_path’’;
