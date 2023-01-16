@@ -25,7 +25,7 @@ The core of the code is the behavior analysis object
 
 Spatially downsamples the movies. Hdf5 -> concat_[...].h5
 
-![alt text](/_readmePics/spatialDownsampling.PNG "Downsampling")
+![alt text](CARPA/_readmePics/spatialDownsampling.PNG "Downsampling")
 
 
 > Using the regular expression field we can downsample a bunch of .hdf5 into different folders.
@@ -85,7 +85,7 @@ The output of the preprocessing is yet another .h5
 
 Used for aligning the cells. We are asked to select a spatial portion of the video, and to select the frame range to use. Only the selected portion will be aligned. Therefore, it is good to select a zone with some landmark, usually small veins are a good option.
 
-![alt text](/_readmePics/turboreg.PNG "Turboreg")
+![alt text](CARPA1ics/turboreg.PNG "Turboreg")
 
 - NumFramesSubset: Divides registration into chunks to save RAM.
 - normalizeType: Has no effects on the movie, only for registration.
@@ -120,7 +120,7 @@ This allows to mask a non-square part of the video that do not interest us, and 
 
 > The masked section will be zeroed
 
-![alt text](/_readmePics/modifyMovies.PNG "ModifyMovie")
+![alt text](CARPA/_readmePics/modifyMovies.PNG "ModifyMovie")
 
 - File regexp: Regular expression within the file we want to mask.
 
@@ -142,7 +142,7 @@ You have to give the number of PCA and ICA components.
 
 > PCA should be 150% of the ICA number.
 
-![alt text](/_readmePics/pcaicaextraction.PNG "ModifyMovie")
+![alt text](CARPA/_readmePics/pcaicaextraction.PNG "ModifyMovie")
 
 > What does the above popup control?
 
