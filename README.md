@@ -47,14 +47,12 @@ CaRPA will ask for the root folder. It is only possible to use an instance of Ca
 
 >This exact syntax of the folder name is important for CaRPA to understand the different fields:
 
-> Mouse-XXXX-YYYYMMDD-EXPERIMENT
->        e.g.     Mouse-5012-20150228-eightPorts 
+> Mouse-XXXX-YYYYMMDD-EXPERIMENT. e.g.     Mouse-5012-20150228-eightPorts 
+       e.g.     Mouse-5012-20150228-eightPorts 
 
 **IMPORTANT:**
 
-> If a given day has two different experiments, they should go in different folders (see example above).
-
-> To change the experiment names in a convenient name, use the command:
+> If a given day has two different experiments, they should go in different folders (see example above).    To change the experiment names in a convenient name, use the command:
 ```
 carp.setExperimentNames;
 ```
