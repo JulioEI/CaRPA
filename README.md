@@ -85,7 +85,7 @@ carp.spatialDS = 4;
 
 >The custom interface to connect to the server is mysftp, which uses the SSH2 library. Therefore, this library and the custom interface must be in the matlab path for this function to work. Besides, a username and password must be provided before connecting to the server.
 
-## 2. The folder structure
+## 2. CaRPA files and folder structure
 
 CaRPA organizes your files in a folder structure. This is a list of the files CaRPA understands:
 
