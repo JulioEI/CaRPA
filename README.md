@@ -17,7 +17,7 @@ carp = carpa;
 ```
 A menu will show up, listing several options:
 
-![alt text](CARPA/_readmePics/options.png "options")
+<img src="CARPA/_readmePics/options.png" alt="Options" width="500"/>
 
 
 ### 1.1. Work on an existing animal:
@@ -41,7 +41,7 @@ CaRPA will ask for the root folder. It is only possible to use an instance of Ca
 
 > When selecting the root folder, make sure the name of the folder you have selected appears  in the window as show below. 
 
-![alt text](CARPA/_readmePics/make_sure.png "makesure")
+ <img src="CARPA/_readmePics/make_sure.png" alt="Make Sure" width="500"/>
 
 **IMPORTANT:**
 
@@ -157,13 +157,13 @@ carp.menu;
 
 This will bring up a menu with different processing options. Select one or more options and click ok.
 
-![alt text](CARPA/_readmePics/processing_options.png "processing_options")
+ <img src="CARPA/_readmePics/processing_options.png" alt="Processing Options" width="500"/>
 
 This will bring up a menu with different processing stages. Select one or more options and click ok.
 
 If a single processing stage is selected a menu will pop up next, which allows to process all available sessions or choose specific ones. 
 
-![alt text](CARPA/_readmePics/single_multiple.png "single_multiple")
+ <img src="CARPA/_readmePics/single_multiple.png" alt="Single/Multiple" width="500"/>
 
 If more than one stage is selected all the corresponding sessions will be processed.
 
