@@ -4,7 +4,7 @@
 Calcium Recordings Processing and Analysis
 
 
-## Starting CaRPA:
+## 1. Starting CaRPA:
 	
 To use CaRPA, first make sure the CaRPA folder is in the matlab's path.
  
@@ -19,7 +19,7 @@ A menu will show up, listing several options:
 
 ![alt text](CARPA/_readmePics/options.png "Options")
 
-1.1. Work on an existing animal:
+### 1.1. Work on an existing animal:
 		
 For working with a folder with calcium recordings, already sorted in folders. The required file structure is the following:
 
@@ -58,7 +58,7 @@ To change the experiment names in a convenient name, use the command:
 	carp.setExperimentNames;
 
 
-	1.2. Create file structure for a new animal
+### 1.2. Create file structure for a new animal
 
 Creates the file structure described in the previous point from a folder with several calcium_recording files. For this to work properly, the first number sequence in the file name should correspond to the day of the recording, e.g.  concat_recording_20150228_192756.h5
 
@@ -67,11 +67,13 @@ IMPORTANT:
 In CaRPA, spatially downsampled non-processed calcium files are called concat_recording_*YYYYMMDD*_*hhmmss*.h5. 
 
 
-1.3. Download files from server
+### 1.3. Download files from server
 
 Allows to download one or more sessions of an animal directly from the cluster. The path of the server is defined by the archiveRawCaPath property. To change it use the command:
 
-	carp.archiveRawCaPath = ‘‘C://new_path’’;
+```
+carp.archiveRawCaPath = ‘‘C://new_path’’;
+```
 
 It is assumed that in the path folder there are folders for the different animals, and inside each animal folder there are folders for the different days, in a similar manner as the folder structure specified in 1.1. 
 
@@ -79,13 +81,15 @@ This function will also decompress .raw files using the Inscopix Decompressor. F
 
 Finally this function will spatially downsample calcium files which do not begin by concat_recording*. It will also spatially downsample newly decompressed files. The amount of spatial downsample is defined by the propriety spatialDS, and can be changed by using the command:
 
-	carp.spatialDS = 4;
+```
+carp.spatialDS = 4;
+```
 
-IMPORTANT:
+==IMPORTANT==:
 
-The custom interface to connect to the server is mysftp, which uses the SSH2 library. Therefore, this library and the custom interface must be in the matlab path for this function to work. Besides, a username and password must be provided before connecting to the server.
+>The custom interface to connect to the server is mysftp, which uses the SSH2 library. Therefore, this library and the custom interface must be in the matlab path for this function to work. Besides, a username and password must be provided before connecting to the server.
 
-The folder structure
+## 2. The folder structure
 
 CaRPA organizes your files in a folder structure. This is a list of the files CaRPA understands:
 
@@ -131,18 +135,23 @@ Other files
 
 The folder structure is accessed using the property folderStruct, and it is updated every time it is modified. However, you can manually update the folder structure by using the command:
 
-	carp.buildFolderStructure;
+```
+carp.buildFolderStructure;
+```
 
-
-Processing the data
+## 3. Processing the data
 
 By default CaRPA tracks the processing stage of the different sessions and only shows and applies the selected processing stages to files which have not been yet processed on those stages. To change this behavior and view/process all available sessions, regardless of preprocessing stage, change the propierty showProcessed to 1:
 
+```
 carp.showProcessed = 1; (Not recommended)
+```
 
 To start the processing, type the following command into the console:
 
+```
 carp.menu;
+```
 
 This will bring up a menu with different processing options. Select one or more options and click ok.
 
@@ -154,9 +163,9 @@ If a single processing stage is selected a menu will pop up next, which allows t
 
 ![alt text](CARPA/_readmePics/single_multiple.png "single_multiple")
 
-	If more than one stage is selected all the corresponding sessions will be processed.
+If more than one stage is selected all the corresponding sessions will be processed.
 
-Carpa Outputs
+## 4. Carpa Outputs
 
 Traces_Events
 
