@@ -8,7 +8,7 @@ Calcium Recordings Processing and Analysis
 	
 To use CaRPA, first make sure the CaRPA folder is in the matlab's path.
  
- ![alt text](CARPA/_readmePics/path.png "Path")
+ <img src="CARPA/_readmePics/path.png" alt="Path" width="200"/>
  
 Next, create an instance of the CaRPA object:
 
