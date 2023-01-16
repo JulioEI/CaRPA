@@ -17,7 +17,7 @@ carp = carpa;
 ```
 A menu will show up, listing several options:
 
-![alt text](CARPA/_readmePics/options.png "Options")
+<img src="CARPA/_readmePics/options.png" alt="Options" width="200"/>
 
 ### 1.1. Work on an existing animal:
 		
