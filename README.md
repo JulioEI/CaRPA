@@ -145,7 +145,7 @@ Proin fringilla consectetur scelerisque. In hac habitasse platea dictumst. Class
 
 Donec tristique condimentum metus. Proin volutpat consectetur dignissim. Vestibulum consequat pharetra dolor in suscipit. Nam accumsan nisl et sem eleifend, eget dapibus arcu iaculis. Donec semper rhoncus massa, cursus condimentum ipsum mattis vel. Integer imperdiet convallis lectus vel laoreet. Aliquam dignissim, mi nec vestibulum dapibus, tellus elit egestas purus, eget malesuada ipsum sapien vitae erat. Vestibulum at nunc porttitor, vehicula lorem vestibulum, aliquam lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam non bibendum augue, auctor scelerisque nisi. Vivamus nibh ligula, tincidunt quis vestibulum ac, semper vel turpis. Integer malesuada massa eu purus dapibus, id pretium ligula elementum. Fusce interdum, quam ac facilisis imperdiet, dui ligula tristique lorem, posuere vestibulum velit est vel ex. 
 
- <img src="CARPA/_readmePics/filtering.gif" alt="Filter" width="500"/>
+ <img src="CARPA/_readmePics/filtering.gif" alt="Filter" width="800"/>
 
 ## 3.4 Postprocess
 
