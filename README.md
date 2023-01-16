@@ -89,7 +89,7 @@ carp.spatialDS = 4;
 
 CaRPA organizes your files in a folder structure. This is a list of the files CaRPA understands:
 
-| FILE | DESCRIPTION | SYNTAX |
+| File | Description | Syntax |
 |--------|--------|--------|
 | concat | Unprocessed, spatially downsampled ca files. | concat_recording_*YYYYMMDD*_*hhmmss*.h5 |
 | dfof | Processed ca files. | Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-dfof.h5 |
