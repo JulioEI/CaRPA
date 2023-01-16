@@ -37,20 +37,20 @@ For working with a folder with calcium recordings, already sorted in folders. Th
 		
 CaRPA will ask for the root folder. It is only possible to use an instance of CaRPA on one root folder at a time.
 
-<mark>IMPORTANT:</mark>
+**IMPORTANT:**
 
 > When selecting the root folder, make sure the name of the folder you have selected appears  in the window as show below. 
 
 ![alt text](CARPA/_readmePics/make_sure.png "makesure")
 
-<mark>IMPORTANT:</mark>
+**IMPORTANT:**
 
 >This exact syntax of the folder name is important for CaRPA to understand the different fields:
 
 > Mouse-XXXX-YYYYMMDD-EXPERIMENT
 >        e.g.     Mouse-5012-20150228-eightPorts 
 
-<mark>IMPORTANT:<mark>
+**IMPORTANT:**
 
 > If a given day has two different experiments, they should go in different folders (see example above).
 
@@ -64,7 +64,7 @@ carp.setExperimentNames;
 
 Creates the file structure described in the previous point from a folder with several calcium_recording files. For this to work properly, the first number sequence in the file name should correspond to the day of the recording, e.g.  concat_recording_20150228_192756.h5
 
-<mark>IMPORTANT:</mark>
+**IMPORTANT:**
 
 > In CaRPA, spatially downsampled non-processed calcium files are called concat_recording_*YYYYMMDD*_*hhmmss*.h5. 
 
@@ -87,7 +87,7 @@ Finally this function will spatially downsample calcium files which do not begin
 carp.spatialDS = 4;
 ```
 
-<mark>IMPORTANT</mark>:
+**IMPORTANT**
 
 >The custom interface to connect to the server is mysftp, which uses the SSH2 library. Therefore, this library and the custom interface must be in the matlab path for this function to work. Besides, a username and password must be provided before connecting to the server.
 
