@@ -37,35 +37,36 @@ For working with a folder with calcium recordings, already sorted in folders. Th
 		
 CaRPA will ask for the root folder. It is only possible to use an instance of CaRPA on one root folder at a time.
 
-IMPORTANT:
+==IMPORTANT:==
 
-When selecting the root folder, make sure the name of the folder you have selected appears  in the window as show below. 
+> When selecting the root folder, make sure the name of the folder you have selected appears  in the window as show below. 
 
 ![alt text](CARPA/_readmePics/make_sure.png "makesure")
 
-IMPORTANT:
+==IMPORTANT:==
 
-This exact syntax of the folder name is important for CaRPA to understand the different fields:
+>This exact syntax of the folder name is important for CaRPA to understand the different fields:
 
-Mouse-XXXX-YYYYMMDD-EXPERIMENT
-        e.g.     Mouse-5012-20150228-eightPorts 
+> Mouse-XXXX-YYYYMMDD-EXPERIMENT
+>        e.g.     Mouse-5012-20150228-eightPorts 
 
-IMPORTANT:
+==IMPORTANT:==
 
-If a given day has two different experiments, they should go in different folders (see example above).
+> If a given day has two different experiments, they should go in different folders (see example above).
 
-To change the experiment names in a convenient name, use the command:
-
-	carp.setExperimentNames;
+> To change the experiment names in a convenient name, use the command:
+```
+carp.setExperimentNames;
+```
 
 
 ### 1.2. Create file structure for a new animal
 
 Creates the file structure described in the previous point from a folder with several calcium_recording files. For this to work properly, the first number sequence in the file name should correspond to the day of the recording, e.g.  concat_recording_20150228_192756.h5
 
-IMPORTANT:
+==IMPORTANT:==
 
-In CaRPA, spatially downsampled non-processed calcium files are called concat_recording_*YYYYMMDD*_*hhmmss*.h5. 
+> In CaRPA, spatially downsampled non-processed calcium files are called concat_recording_*YYYYMMDD*_*hhmmss*.h5. 
 
 
 ### 1.3. Download files from server
