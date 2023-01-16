@@ -2,6 +2,8 @@
 # CaRPA QUICK TUTORIAL
 -----------------------------------
 
+>_WORK IN PROGRESS_
+
 Welcome to CaRPA (Calcium Recordings Processing and Analysis). Here is a quick tutorial and some tips to get you started:
 
 ## 1. Starting CaRPA:
