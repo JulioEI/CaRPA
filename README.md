@@ -98,7 +98,7 @@ CaRPA organizes your files in a folder structure. This is a list of the files Ca
 | decisions | .mat files with cell decisions.| Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-emAnalysisSorted.mat OR Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*EXPERIMENT*-ICDecisions.mat |
 | behavior | .avi files with animal behavior. | .avi |
 | logs | .log files with recording data. | .txt OR  .html |
-| tracesEvents | .mat files with the final processed traces and position data. Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-TracesAndEvents.mat | 
+| tracesEvents | .mat files with the final processed traces and position data. | Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-TracesAndEvents.mat | 
 | other | Other files | * |
 
 
