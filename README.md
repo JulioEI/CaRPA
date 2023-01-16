@@ -2,7 +2,7 @@
 # CaRPA QUICK TUTORIAL
 -----------------------------------
 
->_WORK IN PROGRESS (write a summary on the processing pipeline, write the processing steps, include the cell alignment part, include analysis?_
+>_WORK IN PROGRESS (write a summary on the processing pipeline, write the processing steps, include the cell alignment part, include analysis?_)
 
 Welcome to CaRPA (Calcium Recordings Processing and Analysis). Here is a quick tutorial and some tips to get you started:
 
