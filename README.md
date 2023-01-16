@@ -89,44 +89,17 @@ carp.spatialDS = 4;
 
 CaRPA organizes your files in a folder structure. This is a list of the files CaRPA understands:
 
-FILE
-DESCRIPTION
-SYNTAX
-concat
-Unprocessed, spatially downsampled ca files.
-concat_recording_*YYYYMMDD*_*hhmmss*.h5
-dfof
-Processed ca files.
-Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-dfof.h5
-downsample
-Temporally downsampled processed ca files.
-Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-dfof-downsampled.h5
-analysis
-.mat files with extracted cells and traces.
-Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-emAnalysis.mat
-
-OR 
- 
-Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-pcaicaAnalysis.mat
-decisions
-.mat files with cell decisions.
-Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-emAnalysisSorted.mat
-
-OR 
- 
-Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*EXPERIMENT*-ICDecisions.mat
-behavior
-.avi files with animal behavior.
-.avi
-logs
-.log files with recording data.
-.txt OR  .html
-tracesEvents
-.mat files with the final processed traces and position data.
-Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-TracesAndEvents.mat
-other
-Other files
-*
+| FILE | DESCRIPTION | SYNTAX |
+|--------|--------|--------|
+| concat | Unprocessed, spatially downsampled ca files. | concat_recording_*YYYYMMDD*_*hhmmss*.h5 |
+| dfof | Processed ca files. | Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-dfof.h5 |
+| downsample | Temporally downsampled processed ca files. | Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-dfof-downsampled.h5 |
+| analysis | .mat files with extracted cells and traces. | Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-emAnalysis.mat OR Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-pcaicaAnalysis.mat |
+| decisions | .mat files with cell decisions.| Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-emAnalysisSorted.mat OR Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*EXPERIMENT*-ICDecisions.mat |
+| behavior | .avi files with animal behavior. | .avi |
+| logs | .log files with recording data. | .txt OR  .html |
+| tracesEvents | .mat files with the final processed traces and position data. Mouse-*XXXX*-*YYYYMMDD*_*hhmmss*&*hhmmss*&...*-EXPERIMENT*-TracesAndEvents.mat | 
+| other | Other files | * |
 
 
 The folder structure is accessed using the property folderStruct, and it is updated every time it is modified. However, you can manually update the folder structure by using the command:
@@ -163,18 +136,16 @@ If more than one stage is selected all the corresponding sessions will be proces
 
 ## 4. Carpa Outputs
 
-|Variable Name | Dimensions | Description|
+| Variable Name | Dimensions | Description|
 |--------------|--------------|--------------|
-|rawProb | time x neurons  | maximum likelihood dfof of each neuron, given by the CELLMAX algorithm|
-| rawTraces| time x neurons | dfof value of each neuron |
-| position | time x coordinates | detected tracker position. |
-| velocity | time | absolute velocity |
-| tresholdEvents | time x neurons | whether there is a spike at each time given by the thresholding algorithm method developed by Biafra Bahanonu: \miniscope_analysis-bahanonu-miniscopeAnalysisClass_18_08_17\signal_processing\computeSignalPeaks.m | 
-|spikeDeconv | time x neurons | whether there is a spike at each time given by the spike deconvolution algorithm from Pnevmatikakis et al 2013. Bayesian spike inference from calcium imaging data https://github.com/zhoupc/OASIS_matlab |
-| spikeML | time x neurons | whether there is a spike at each time given by the spikeML algorithm from : Deneux T, Kaszas A, Szalay G, Katona G, Lakner T, Grinvald A, et al. Accurate spike estimation from noisy calcium signals for ultrafast three-dimensional imaging of large neuronal populations in vivo. 2016 https://github.com/MLspike/spikes | 
-| spikeDeconvTrace | time x neurons | denoised df/f traces given by the spike deconvolution algorithm |
-| cellAnatomicLocat | neurons x coordinate | location of each neuron centroid | 
-
-
+| rawProb | time x neurons  | Maximum likelihood dfof of each neuron, given by the CELLMAX algorithm|
+| rawTraces| time x neurons | DFOF value of each neuron |
+| position | time x coordinates | Detected tracker position. |
+| velocity | time | Absolute velocity |
+| tresholdEvents | time x neurons | Whether there is a spike at each time given by the thresholding algorithm method developed by Biafra Bahanonu: \miniscope_analysis-bahanonu-miniscopeAnalysisClass_18_08_17\signal_processing\computeSignalPeaks.m | 
+|spikeDeconv | time x neurons | Whether there is a spike at each time given by the spike deconvolution algorithm from Pnevmatikakis et al 2013. Bayesian spike inference from calcium imaging data https://github.com/zhoupc/OASIS_matlab |
+| spikeML | time x neurons | Whether there is a spike at each time given by the spikeML algorithm from : Deneux T, Kaszas A, Szalay G, Katona G, Lakner T, Grinvald A, et al. Accurate spike estimation from noisy calcium signals for ultrafast three-dimensional imaging of large neuronal populations in vivo. 2016 https://github.com/MLspike/spikes | 
+| spikeDeconvTrace | time x neurons | Denoised df/f traces given by the spike deconvolution algorithm |
+| cellAnatomicLocat | neurons x coordinate | Location of each neuron centroid | 
 
 
