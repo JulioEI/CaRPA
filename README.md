@@ -85,7 +85,7 @@ The output of the preprocessing is yet another .h5
 
 Used for aligning the cells. We are asked to select a spatial portion of the video, and to select the frame range to use. Only the selected portion will be aligned. Therefore, it is good to select a zone with some landmark, usually small veins are a good option.
 
-![alt text](CARPA1ics/turboreg.PNG "Turboreg")
+![alt text](CARPA/_readmePics/turboreg.PNG "Turboreg")
 
 - NumFramesSubset: Divides registration into chunks to save RAM.
 - normalizeType: Has no effects on the movie, only for registration.
