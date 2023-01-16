@@ -6,9 +6,14 @@ Calcium Recordings Processing and Analysis
 
 ## Starting CaRPA:
 	
- To use CaRPA, create an instance of the CaRPA object:
+To use CaRPA, first make sure the CaRPA folder is in the matlab's path.
+ 
+ ![alt text](CARPA/_readmePics/path.png "Path")
+ 
+Next, create an instance of the CaRPA object:
+
 ```
-		carp = carpa;
+carp = carpa;
 ```
 A menu will show up, listing several options:
 
