@@ -45,10 +45,7 @@ CaRPA will ask for the root folder. It is only possible to use an instance of Ca
 
 **IMPORTANT:**
 
->This exact syntax of the folder name is important for CaRPA to understand the different fields:
-
-> Mouse-XXXX-YYYYMMDD-EXPERIMENT. e.g.     Mouse-5012-20150228-eightPorts 
-       e.g.     Mouse-5012-20150228-eightPorts 
+>This exact syntax of the folder name is important for CaRPA to understand the different fields:  Mouse-XXXX-YYYYMMDD-EXPERIMENT. e.g.     Mouse-5012-20150228-eightPorts 
 
 **IMPORTANT:**
 
