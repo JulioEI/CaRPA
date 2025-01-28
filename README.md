@@ -10,7 +10,7 @@ Welcome to CaRPA (Calcium Recordings Processing and Analysis). Here is a quick t
 	
 To use CaRPA, first make sure the CARPA folder is in MATLAB's path.
  
- <img src="CARPA/_readmePics/path.png" alt="Path" width="500"/>
+ <img src="_readmePics/path.png" alt="Path" width="500"/>
  
 Next, create an instance of the CaRPA object:
 
@@ -19,7 +19,7 @@ carp = carpa;
 ```
 A menu will show up, listing several options:
 
-<img src="CARPA/_readmePics/options.png" alt="Options" width="500"/>
+<img src="_readmePics/options.png" alt="Options" width="500"/>
 
 
 ### 1.1. Work on an existing animal:
@@ -42,7 +42,7 @@ CaRPA will ask for the root folder. It is only possible to use an instance of Ca
 
 > When selecting the root folder, make sure the name of the folder you have selected appears in the window as show below. 
 
- <img src="CARPA/_readmePics/make_sure.png" alt="Make Sure" width="500"/>
+ <img src="_readmePics/make_sure.png" alt="Make Sure" width="500"/>
 
 **IMPORTANT:**
 
@@ -126,13 +126,13 @@ carp.menu;
 
 This will bring up a menu with different processing options. Select one or more options and click ok.
 
- <img src="CARPA/_readmePics/processing_options.png" alt="Processing Options" width="500"/>
+ <img src="_readmePics/processing_options.png" alt="Processing Options" width="500"/>
 
 This will bring up a menu with different processing stages. Select one or more options and click ok.
 
 If a single processing stage is selected a menu will pop up next, which allows to process all available sessions or choose specific ones. 
 
- <img src="CARPA/_readmePics/single_multiple.png" alt="Single/Multiple" width="500"/>
+ <img src="_readmePics/single_multiple.png" alt="Single/Multiple" width="500"/>
 
 If more than one stage is selected all the corresponding sessions will be processed.
 
@@ -147,7 +147,7 @@ Proin fringilla consectetur scelerisque. In hac habitasse platea dictumst. Class
 
 Donec tristique condimentum metus. Proin volutpat consectetur dignissim. Vestibulum consequat pharetra dolor in suscipit. Nam accumsan nisl et sem eleifend, eget dapibus arcu iaculis. Donec semper rhoncus massa, cursus condimentum ipsum mattis vel. Integer imperdiet convallis lectus vel laoreet. Aliquam dignissim, mi nec vestibulum dapibus, tellus elit egestas purus, eget malesuada ipsum sapien vitae erat. Vestibulum at nunc porttitor, vehicula lorem vestibulum, aliquam lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam non bibendum augue, auctor scelerisque nisi. Vivamus nibh ligula, tincidunt quis vestibulum ac, semper vel turpis. Integer malesuada massa eu purus dapibus, id pretium ligula elementum. Fusce interdum, quam ac facilisis imperdiet, dui ligula tristique lorem, posuere vestibulum velit est vel ex. 
 
- <img src="CARPA/_readmePics/filtering.gif" alt="Filter" width="800"/>
+ <img src="_readmePics/filtering.gif" alt="Filter" width="800"/>
 
 ## 3.4 Postprocess
 
