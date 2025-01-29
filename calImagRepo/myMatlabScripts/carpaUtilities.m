@@ -462,6 +462,118 @@ classdef carpaUtilities
 %                 end
 %             end
         end
+        function datasetPath = getDatasetPath(filePath, varargin)
+            verbose = carpaUtilities.parseInput({varargin,'verbose',false});
+            % This function reads the information of an HDF5 file and finds a dataset with 3 dimensions
+            info = h5info(filePath);  % Get HDF5 file info
+
+            % Initialize variable to store the path of the dataset with 3 dimensions
+            currentPath = '';
+            % Explore each group in the HDF5 file
+            for i = 1:length(info.Groups)
+                % Try to find the dataset with exactly 3 dimensions
+                datasetPath = carpaUtilities.exploreGroup(info.Groups(i), filePath, currentPath, verbose);
+                if ~isempty(datasetPath)
+                    if verbose; disp(['Found dataset path: ', datasetPath]); end
+                    return;  % If dataset is found, exit early
+                end
+            end
+            
+            % Check for datasets at the root level
+            if isfield(info, 'Datasets') && ~isempty(info.Datasets)
+                for j = 1:length(info.Datasets)
+                    currentPath = '/';
+                    datasetPath = carpaUtilities.checkDatasetDimensions(info.Datasets(j), currentPath, verbose);
+                    if ~isempty(datasetPath)
+                        if verbose; disp(['Found dataset path: ', datasetPath]); end
+                        return;  % Exit early if found
+                    end
+                end
+            end
+
+            % After exploring all groups and root-level datasets, return the path of the dataset
+            if isempty(datasetPath)
+                if verbose; disp('No dataset with 3 dimensions found.'); end
+            end
+        end
+                % exploreGroup
+        function datasetPath = exploreGroup(group, filePath, currentPath, verbose)
+            datasetPath  = '';
+            % Display the current group name
+            if verbose; disp(['Group: ', group.Name]); end
+            % Check if this group contains datasets
+            if isfield(group, 'Datasets') && ~isempty(group.Datasets)
+                % Iterate over datasets in this group
+                for j = 1:length(group.Datasets)
+                    datasetPath = carpaUtilities.checkDatasetDimensions(group.Datasets(j), [currentPath, group.Name], verbose);
+                    if ~isempty(datasetPath)
+                        return;  % Exit early if found
+                    end
+                end
+            else
+                % If the group does not contain any datasets
+                if verbose; disp('  No datasets found in this group.'); end
+            end
+            
+            % Recursively explore subgroups
+            if isfield(group, 'Groups')
+                for k = 1:length(group.Groups)
+                    datasetPath = carpaUtilities.exploreGroup(group.Groups(k), filePath, currentPath, verbose);
+                    if ~isempty(datasetPath)
+                        return;  % Exit early if dataset is found
+                    end
+                end
+            end
+        end
+
+        % checkDatasetDimensions
+        function datasetPath = checkDatasetDimensions(dataset, currentPath, verbose)
+
+            if currentPath(end) ~= '/'
+                currentPath = [currentPath, '/'];
+            end
+            % Display the size of the dataset
+            datasetSize = carpaUtilities.getDatasetSize(dataset);
+            if verbose; fprintf('  Dataset: %s', dataset.Name); end
+            if numel(datasetSize) == 3
+                if verbose; fprintf(' | size %s \n',num2str(datasetSize)); end
+                % Check if the dataset has exactly 3 dimensions
+                % Check the third dimension (frames)
+                numFrames = datasetSize(3);
+                % If the third dimension is more than 100 frames, proceed automatically
+                if numFrames > 100
+                    datasetPath = [currentPath, dataset.Name];  % Append "/"
+                else
+                    % Ask for user confirmation
+                    disp(['    Third dimension has ', num2str(numFrames), ' frames (<= 100).']);
+                    user_response = input('Would you like to confirm this dataset? (y/n): ', 's');
+                    if lower(user_response) == 'y'
+                        % If the group is the root ("/"), don't add an extra "/"
+                        datasetPath = [groupName, dataset.Name];  % Append "/"
+                    else
+                        datasetPath = '';
+                    end
+                end
+            elseif isempty(datasetSize)
+                if verbose; fprintf(' | size not available\n'); end
+                datasetPath = '';
+            else
+                if verbose; fprintf(' | non 3D size found\n'); end
+                datasetPath = '';
+            end
+        end
+
+        function datasetSize = getDatasetSize(dataset)
+            % Try to get the dataset size, return empty if size is not available
+            if isfield(dataset, 'Dataspace') && isfield(dataset.Dataspace, 'Size')
+                datasetSize = dataset.Dataspace.Size;  
+            elseif isfield(dataset, 'Dims')
+                datasetSize = dataset.Dims;  
+            else
+                datasetSize = '';  
+            end
+        end
+
     end
     
     methods(Static, Access = private)
