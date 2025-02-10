@@ -110,7 +110,9 @@ classdef carpaUtilities
             movieDS = movie(1:downX,1:downY,:);
         end
         
-        %%%%%%%%%%%%%%%%%%%%%%%%%
+
+        
+                %%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%UTILITY FUNCTIONS%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%
         
@@ -119,50 +121,89 @@ classdef carpaUtilities
             allItems = allItems(3:end); %remove WINDOWS metadata folders
             allFiles = allItems(~[allItems.isdir]);
         end
+
+
         
-        function movie = readHdf5(movie,varargin)
+        function fullMovie = readHdf5(movie,varargin)
+
+            % search_for_dataset
             if isstr(movie)
-                hinf = hdf5info(movie);
-                movie = hdf5read(hinf.GroupHierarchy.Datasets);
+                data_path = search_for_dataset(movie);
+                fullMovie = h5read(movie, data_path);
             end
             if iscell(movie)
-                fullMovie = [];
                 if isstr(movie{1}) 
                     %Check out if dimensions are compatible
                     movieSizes = zeros([length(movie),3]);
+                    dataPathList = cell(size(movie));
                     for k = 1:length(movie)
-                        hinf = hdf5info(movie{k});
-                        movieSizes(k,:) = hinf.GroupHierarchy.Datasets.Dims;
+                        dataPathList{k} = search_for_dataset(movie{k});
+                        dataset_info = h5info(movie{k}, dataPathList{k});  % Get the info of the dataset
+                        movieSizes(k,:) = dataset_info.Dataspace.Size;  % Get the size of the dataset
                     end
-                    if length(unique(movieSizes(:,1))) > 1 || length(unique(movieSizes(:,2))) > 1
+
+                    if length(unique(movieSizes(:,1))) > 1 || length(unique(movieSizes(:,2))) > 1  %same size movies
                         warning('MOVIE DIMENSIONS ARE NOT COMPATIBLE')
                         %Quick and dirty fix
                         dimX = min(movieSizes(:,1));
                         dimY = min(movieSizes(:,2));
                         offsetX = [floor((movieSizes(:,1)-dimX)/2),floor((movieSizes(:,1)-dimX)/2)+mod((movieSizes(:,1)-dimX),2)];
                         offsetY = [floor((movieSizes(:,2)-dimY)/2),floor((movieSizes(:,2)-dimY)/2)+mod((movieSizes(:,2)-dimY),2)];
+
+                        fullMovie = zeros(dimX,dimY, sum(movieSizes(:,3)), 'uint16');
                         for k = 1:length(movie)
                             hinf = hdf5info(movie{k});
-                            sliceMovie = hdf5read(hinf.GroupHierarchy.Datasets);
-                            sliceMovie = sliceMovie((1+offsetX(k,1)):(end-offsetX(k,2)),(1+offsetY(k,1)):(end-offsetY(k,2)),:);                           %sliceMovie = 
-                            fullMovie = cat(3,fullMovie,sliceMovie);
-                        end
+                            
+                            % sliceMovie = hdf5read(hinf.GroupHierarchy.Datasets);
+                            sliceMovie = h5read(movie{k}, dataset_path);
+
+                            sliceMovie = sliceMovie((1+offsetX(k,1)):(end-offsetX(k,2)),(1+offsetY(k,1)):(end-offsetY(k,2)),:);
+                            
+                            % Calculate the starting and ending index for the 3rd dimension of fullMovie
+                            start_frame = sum(movieSizes(1:k-1, 3)) + 1;  % Start frame index based on previous movie sizes
+                            end_frame = sum(movieSizes(1:k, 3));  % End frame index for the current movie slice
                         
-                        movie = fullMovie;
-                        return;
-                    end
-                    
-                    for moviePart = movie
-                        hinf = hdf5info(moviePart{1});
-                        sliceMovie = hdf5read(hinf.GroupHierarchy.Datasets);
-                        fullMovie = cat(3,fullMovie,sliceMovie);
+                            % Assign the sliceMovie to the corresponding part of fullMovie
+                            fullMovie(:, :, start_frame:end_frame) = sliceMovie;  % Place sliceMovie in the right spot
+                            % fullMovie(:,:,idx_start:idx_end) = sliceMovie;
+
+                        end
+                    else  %same size movies
+                        fullMovie = zeros(movieSizes(1,1), movieSizes(1,2), sum(movieSizes(:,3)), 'uint16');
+                        for  k = 1:length(movie)
+                            % original
+                            sliceMovie = h5read(movie{k}, dataPathList{k});
+                            start_frame = sum(movieSizes(1:k-1, 3)) + 1;  % Start frame index
+                            end_frame = sum(movieSizes(1:k, 3));  % End frame index
+                            fullMovie(:, :, start_frame:end_frame) = sliceMovie;
+
+                            %  % Process in chunks (e.g., 100 frames at a time)
+                            % chunkSize = 100;  % added Set chunk size based on available memory
+                            % for chunkStart = 1:chunkSize:movieSizes(k, 3)
+                            %     sliceMovie = h5read(movie{k}, dataPathList{k});
+                            %     chunkEnd = min(chunkStart + chunkSize - 1, movieSizes(k, 3));  % Handle last chunk
+                            % 
+                            %     % Extract the chunk of frames
+                            %     frameChunk = sliceMovie(:, :, chunkStart:chunkEnd);
+                            % 
+                            %     % Calculate start and end frame indices for the fullMovie
+                            %     start_frame = sum(movieSizes(1:k-1, 3)) + chunkStart;
+                            %     end_frame = sum(movieSizes(1:k-1, 3)) + chunkEnd;
+                            % 
+                            %     % Place the chunk of frames into fullMovie
+                            %     fullMovie(:, :, start_frame:end_frame) = frameChunk;
+                            % end
+                            % 
+                            % clear sliceMovie;  % Free memory after processing the current movie part
+
+                       end
                     end
                 else
+                    fullMovie = [];
                     for moviePart = movie
                         fullMovie = cat(3,fullMovie,moviePart{1});
                     end
                 end
-                movie = fullMovie;
             end
         end
        
