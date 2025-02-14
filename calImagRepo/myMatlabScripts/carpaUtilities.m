@@ -125,21 +125,22 @@ classdef carpaUtilities
 
         
         function fullMovie = readHdf5(movie,varargin)
-
+            keyboard;
             % search_for_dataset
             if isstr(movie)
-                data_path = search_for_dataset(movie);
+                data_path = carpaUtilities.getDatasetPath(movie);
                 fullMovie = h5read(movie, data_path);
             end
+
             if iscell(movie)
                 if isstr(movie{1}) 
                     %Check out if dimensions are compatible
                     movieSizes = zeros([length(movie),3]);
                     dataPathList = cell(size(movie));
                     for k = 1:length(movie)
-                        dataPathList{k} = search_for_dataset(movie{k});
-                        dataset_info = h5info(movie{k}, dataPathList{k});  % Get the info of the dataset
-                        movieSizes(k,:) = dataset_info.Dataspace.Size;  % Get the size of the dataset
+                        dataPathList{k} = carpaUtilities.getDatasetPath(movie{k});
+                        datasetInfo = h5info(movie{k}, dataPathList{k});  % Get the info of the dataset
+                        movieSizes(k,:) = datasetInfo.Dataspace.Size;  % Get the size of the dataset
                     end
 
                     if length(unique(movieSizes(:,1))) > 1 || length(unique(movieSizes(:,2))) > 1  %same size movies
@@ -388,6 +389,82 @@ classdef carpaUtilities
             idx = find(strcmp(nameCut,namesCut));
             
         end
+
+        function createLogFile(obj,dateTime)
+            % This function creates a new log file in the specified folder with the specified XML format.
+            
+            % Extract information from obj
+            logFolder = obj.folderStruct.path;  % Assuming 'folderStruct' is a field in obj
+            dateStr = datestr(now, 'yyyyMMdd');  % Current date
+            mouseCode = obj.mouse;
+            mouseDate = obj.dateParser;
+            mouseTime = obj.timeParser;
+            mouseExperiment = obj.folderStruct.experiment;
+        
+            % Define the log file name using the extracted information
+            logFileName = fullfile(logFolder, sprintf('Mouse-%s-%s-%s-log.xml', mouseCode,dateTime,mouseExperiment));
+        
+            % Open a new file to write the log
+            fid = fopen(logFileName, 'w');
+        
+            if fid == -1
+                error('Unable to create log file.');
+            end
+             
+            filePath = strcat(obj.folderStruct.path, '\', obj.folderStruct.concat.fileName);
+            info = h5info(filePath);  % Get HDF5 file info
+            datasetSize = info.Datasets.Dataspace.Size;
+            numFrames = datasetSize(3);
+
+
+
+        
+            % Write the XML structure to the file
+            fprintf(fid, ['<recording>\n' ...
+                          '<attrs>\n' ...
+                          '<attr name="version">2.0.32-20150915-065415</attr>\n' ...
+                          '<attr name="width">1080</attr>\n' ...
+                          '<attr name="height">1080</attr>\n' ...
+                          '<attr name="left">360</attr>\n' ...
+                          '<attr name="top">0</attr>\n' ...
+                          '<attr name="fps">20.00</attr>\n' ...
+                          '<attr name="exposure">49.664</attr>\n' ...
+                          '<attr name="time">[]</attr>\n' ...
+                          '<attr name="frames">%d</attr>\n' ...
+                          '<attr name="dropped_count">0</attr>\n' ...
+                          '<attr name="dropped">[]</attr>\n' ...
+                          '<attr name="downsample">1X</attr>\n' ...
+                          '<attr name="gain">[]</attr>\n' ...
+                          '<attr name="led_power">[]</attr>\n' ...
+                          '<attr name="led_delay_value">[]</attr>\n' ...
+                          '<attr name="led_session">[]</attr>\n' ...
+                          '<attr name="led_project">[]</attr>\n' ...
+                          '<attr name="record_start">[]</attr>\n' ...
+                          '<attr name="record_end">[]</attr>\n' ...
+                          '<attr name="record_triggered">False</attr>\n' ...
+                          '<attr name="record_sched_batch">[]</attr>\n' ...
+                          '<attr name="record_sched_name">[]</attr>\n' ...
+                          '<attr name="record_sched_step">[]</attr>\n' ...
+                          '<attr name="record_sched_cycle">[]</attr>\n' ...
+                          '<attr name="rois">[]</attr>\n' ...
+                          '<attr name="meta_data">[]</attr>\n' ...
+                          '<attr name="camera_chip_version">0x1402L</attr>\n' ...
+                          '<attr name="sensor_board_serial_number">A-201020632</attr>\n' ...
+                          '<attr name="hardware_serial_number">AA-1211150428</attr>\n' ...
+                          '</attrs>\n' ...
+                          '<decompressed>\n' ...
+                          '<file frames="%d">%s</file>\n' ...
+                          '</decompressed>\n' ...
+                          '</recording>\n'],numFrames,numFrames, obj.folderStruct.concat.fileName);
+        
+            % Close the file
+            fclose(fid);
+        
+            % Display a message that the file was created
+            disp(['Log file created: ', logFileName]);
+        end
+
+
         
         function maskedFiles = maskSelectedFiles(selectedFiles,maskFiles)
             allSelectedFiles = cat(2,selectedFiles{:});
@@ -614,6 +691,7 @@ classdef carpaUtilities
                 datasetSize = '';  
             end
         end
+
 
     end
     

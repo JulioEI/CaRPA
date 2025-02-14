@@ -463,25 +463,24 @@ classdef carpa < handle
                     % Parse the date and time into separate components
                     year = str2double(dateStr(1:4));  % '2022'
                     month = str2double(dateStr(5:6));  % '05'
-                    dayStr = str2double(dateStr(7:8));  % '24'
+                    day = str2double(dateStr(7:8));  % '24'
                     
                     hour = str2double(timeStr(1:2));  % '10'
                     minute = str2double(timeStr(3:4));  % '02'
                     second = str2double(timeStr(5:6));  % '53'
                     
                     % Create the final date-time array
-                    dateTimeArray = [year, month, dayStr, hour, minute, second];
+                    dateTimeArray = [year, month, day, hour, minute, second];
     
                     obj.folderStruct(day).logs(end+1).date = dateTimeArray;
                     obj.folderStruct(day).logs(end).folder = obj.folderStruct.folderName;
                     obj.folderStruct(day).logs(end).experiment = obj.folderStruct.experiment;
-                    obj.folderStruct(day).logs(end).fileName = sprintf('Mouse-%s-%s-%s-log.xml', obj.folderStruct.mouse,extractedPart,obj.folderStruct.experiment);
-                    % obj.folderStruct(day).logs(end).dispName = ['log_','day:',dateStr,'_sess:',char(join(sessions,'-'))];
-                    obj.folderStruct(day).logs(end).dispName = ['log_','day:',dateStr,'_sess:',timeStr];
-
+                    obj.folderStruct(day).logs(end).fileName = allFiles(k).name;
+                    sprintf('Mouse-%s-%s-%s-log.xml', obj.folderStruct.mouse,extractedPart,obj.folderStruct.experiment)
+                    obj.folderStruct(day).logs(end).dispName = ['log_','day:',day,'_sess:',char(join(sessions,'-'))];
                 end
             end
-            pause(1);  % Pause for 1 second to ensure file creation
+            pause(10);  % Pause for 1 second to ensure file creation
             tempLOGFiles = getAllFilesWithType(obj, 'logs');
             tempLOGFileNames = cellfun(@(x) {x.fileName}, tempLOGFiles,'UniformOutput',0);
             allLOGFileNames = cat(2,tempLOGFileNames{:});

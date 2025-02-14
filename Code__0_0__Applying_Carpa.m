@@ -18,7 +18,7 @@ disp(' If you want, just to have it printed at the end for your own information,
 A = input(' Enter the Animal number and the session you are going to work on : ' , 's');
 Pro = input(' And the processing Stage of Carapa you are going to apply: ' ,'s');
 input(' Now press ENTER to choose the corresponding folder and start analysing');
-addpath(genpath('C:\Users\usuario\Documents\MATLAB'));
+addpath(genpath('C:\Users\usuario\Documents\GitHub'));
 carp = carpa;
 carp.menu; 
 disp(repmat('~',[1,100]));
