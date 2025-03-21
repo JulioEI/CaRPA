@@ -436,55 +436,57 @@ classdef carpa < handle
             allBEHAVIORFileNames = cat(2,tempBEHAVIORFileNames{:});
             if isempty(allBEHAVIORFileNames);error('There are no behavior files in folder');end
 
-            tempLOGFiles = getAllFilesWithType(obj, 'logs');
-            if isempty(tempLOGFiles)
-                % If no log files found, create a new log file in the same folder as 'obj'
-                extractedPart = '';
-                pattern = '(?<=^.*?-.*?)(\d{8}_\d{6})(?=-)';
-                for day = 1:length(selectedFiles)
-                    % Apply regexp to extract the desired part
-                    matches = regexp(selectedFiles{day}.fileName, pattern, 'match');
-                    % Check if the match was found
-                    if ~isempty(matches)
-                        extractedPart = matches{1};
-                        disp(extractedPart);  % Output: 20220524_100253
-                        carpaUtilities.createLogFile(obj, matches{1});  % Pass 'obj' to the static method
-                    else
-                        disp('No date and time string found');
-                    end
-                    
-                    disp('No log files found. A new log file has been created.');
-
-
-                    % Extract date and time from the matched string
-                    dateStr = extractedPart(1:8);  % '20220524'
-                    timeStr = extractedPart(10:end);  % '100253'
-                    
-                    % Parse the date and time into separate components
-                    year = str2double(dateStr(1:4));  % '2022'
-                    month = str2double(dateStr(5:6));  % '05'
-                    day = str2double(dateStr(7:8));  % '24'
-                    
-                    hour = str2double(timeStr(1:2));  % '10'
-                    minute = str2double(timeStr(3:4));  % '02'
-                    second = str2double(timeStr(5:6));  % '53'
-                    
-                    % Create the final date-time array
-                    dateTimeArray = [year, month, day, hour, minute, second];
-    
-                    obj.folderStruct(day).logs(end+1).date = dateTimeArray;
-                    obj.folderStruct(day).logs(end).folder = obj.folderStruct.folderName;
-                    obj.folderStruct(day).logs(end).experiment = obj.folderStruct.experiment;
-                    obj.folderStruct(day).logs(end).fileName = allFiles(k).name;
-                    sprintf('Mouse-%s-%s-%s-log.xml', obj.folderStruct.mouse,extractedPart,obj.folderStruct.experiment)
-                    obj.folderStruct(day).logs(end).dispName = ['log_','day:',day,'_sess:',char(join(sessions,'-'))];
-                end
-            end
-            pause(10);  % Pause for 1 second to ensure file creation
-            tempLOGFiles = getAllFilesWithType(obj, 'logs');
-            tempLOGFileNames = cellfun(@(x) {x.fileName}, tempLOGFiles,'UniformOutput',0);
-            allLOGFileNames = cat(2,tempLOGFileNames{:});
-            if isempty(allLOGFileNames);error('There are no log files in folder');end
+            % tempLOGFiles = getAllFilesWithType(obj, 'logs');
+            % if isempty(tempLOGFiles)
+            %     % If no log files found, create a new log file in the same folder as 'obj'
+            %     extractedPart = '';
+            %     pattern = '(?<=^.*?-.*?)(\d{8}_\d{6})(?=-)';
+            %     for day = 1:length(selectedFiles)
+            %         % Apply regexp to extract the desired part
+            %         disp(class(selectedFiles{day}.fileName));
+            %         matches = regexp(selectedFiles{day}.fileName, pattern, 'match');
+            %         % Check if the match was found
+            %         if ~isempty(matches)
+            %             extractedPart = matches{1};
+            %             disp(extractedPart);  % Output: 20220524_100253
+            %             carpaUtilities.createLogFile(obj, matches{1});  % Pass 'obj' to the static method
+            %         else
+            %             disp('No date and time string found');
+            %         end
+            % 
+            %         disp('No log files found. A new log file has been created.');
+            % 
+            % 
+            %         % Extract date and time from the matched string
+            %         dateStr = extractedPart(1:8);  % '20220524'
+            %         timeStr = extractedPart(10:end);  % '100253'
+            % 
+            %         % Parse the date and time into separate components
+            %         year = str2double(dateStr(1:4));  % '2022'
+            %         month = str2double(dateStr(5:6));  % '05'
+            %         dayStr = str2double(dateStr(7:8));  % '24'
+            % 
+            %         hour = str2double(timeStr(1:2));  % '10'
+            %         minute = str2double(timeStr(3:4));  % '02'
+            %         second = str2double(timeStr(5:6));  % '53'
+            % 
+            %         % Create the final date-time array
+            %         dateTimeArray = [year, month, dayStr, hour, minute, second];
+            % 
+            %         obj.folderStruct(day).logs(end+1).date = dateTimeArray;
+            %         obj.folderStruct(day).logs(end).folder = obj.folderStruct.folderName;
+            %         obj.folderStruct(day).logs(end).experiment = obj.folderStruct.experiment;
+            %         obj.folderStruct(day).logs(end).fileName = sprintf('Mouse-%s-%s-%s-log.xml', obj.folderStruct.mouse,extractedPart,obj.folderStruct.experiment);
+            %         % obj.folderStruct(day).logs(end).dispName = ['log_','day:',dateStr,'_sess:',char(join(sessions,'-'))];
+            %         obj.folderStruct(day).logs(end).dispName = ['log_','day:',dateStr,'_sess:',timeStr];
+            % 
+            %     end
+            % end
+            % pause(1);  % Pause for 1 second to ensure file creation
+            % tempLOGFiles = getAllFilesWithType(obj, 'logs');
+            % tempLOGFileNames = cellfun(@(x) {x.fileName}, tempLOGFiles,'UniformOutput',0);
+            % allLOGFileNames = cat(2,tempLOGFileNames{:});
+            % if isempty(allLOGFileNames);error('There are no log files in folder');end
 
             tempEXTRACTFiles = getAllFilesWithType(obj,'analysis');
             if isempty(tempEXTRACTFiles);error('NO EXTRACT FILES FOUND');end
@@ -539,49 +541,49 @@ classdef carpa < handle
                     extractFile = [obj.rootFolder,filesep,file.folder,filesep,extractName{1}];
                     
                     %LOGS
-                    logNames = {};
-                    for k = 1:size(file.date,1)
-                        lName = ['Mouse-',obj.mouse,'-',datestr(file.date(k,:),obj.dateParser),'_',datestr(file.date(k,:),obj.timeParser),'-',file.experiment,'-log'];
-                        logNames = [logNames,allLOGFileNames(carpaUtilities.compareNamesTillExperiment(lName,allLOGFileNames,file.experiment))];
-                    end
-                    if isempty(logNames)
-                        disp(repmat('-',[1,100]))
-                        disp('The sesions in this file are...')
-                        disp(file.date)
-                        disp(repmat('-',[1,100]))
-                        h = msgbox(num2str(file.date),'SESSIONS IN FILE:','Help');
-                        newLogNames = uigetfile({'*.txt;*.xml';},'Select all log sessions of this file: ',[obj.rootFolder,filesep,file.folder],'MultiSelect', 'on');
-                        delete(h)
-                        if ~iscell(newLogNames)
-                            newLogNames = {newLogNames};
-                        end
-                        
-                        if isempty(newLogNames)
-                            warning(['No logs selected for file ', file.fileName, 'skipping...'])
-                            continue;
-                        end
-                        
-                        %Rename log files
-                        if length(newLogNames) == size(file.date,1)
-                            for k = 1:length(newLogNames)
-                                ext = strsplit(newLogNames{k},'.');
-                                saveName = ['Mouse-',obj.mouse,'-',datestr(file.date(k,:),obj.dateParser),'_',datestr(file.date(k,:),obj.timeParser),'-',file.experiment,'-log.',ext{end}];
-                                movefile([obj.rootFolder,filesep,file.folder,filesep,newLogNames{k}],[obj.rootFolder,filesep,file.folder,filesep,saveName])
-                            end
-                            obj.buildFolderStructure;
-                            tempLOGFileNames = cellfun(@(x) {x.fileName}, getAllFilesWithType(obj,'logs'),'UniformOutput',0);
-                            allLOGFileNames = cat(2,tempLOGFileNames{:});
-                            logNames = {};
-                            for k = 1:size(file.date,1)
-                                lName = ['Mouse-',obj.mouse,'-',datestr(file.date(k,:),obj.dateParser),'_',datestr(file.date(k,:),obj.timeParser),'-',file.experiment,'-log'];
-                                logNames = [logNames,allLOGFileNames(carpaUtilities.compareNamesTillExperiment(lName,allLOGFileNames,file.experiment))];
-                            end
-                        else
-                            logNames = newLogNames;
-                        end
-                    end
-                    logFiles = cellfun(@(x) [obj.rootFolder,filesep,file.folder,filesep,x], logNames, 'UniformOutput',0);
-                    
+                    % logNames = {};
+                    % for k = 1:size(file.date,1)
+                    %     lName = ['Mouse-',obj.mouse,'-',datestr(file.date(k,:),obj.dateParser),'_',datestr(file.date(k,:),obj.timeParser),'-',file.experiment,'-log'];
+                    %     logNames = [logNames,allLOGFileNames(carpaUtilities.compareNamesTillExperiment(lName,allLOGFileNames,file.experiment))];
+                    % end
+                    % if isempty(logNames)
+                    %     disp(repmat('-',[1,100]))
+                    %     disp('The sesions in this file are...')
+                    %     disp(file.date)
+                    %     disp(repmat('-',[1,100]))
+                    %     h = msgbox(num2str(file.date),'SESSIONS IN FILE:','Help');
+                    %     newLogNames = uigetfile({'*.txt;*.xml';},'Select all log sessions of this file: ',[obj.rootFolder,filesep,file.folder],'MultiSelect', 'on');
+                    %     delete(h)
+                    %     if ~iscell(newLogNames)
+                    %         newLogNames = {newLogNames};
+                    %     end
+                    % 
+                    %     if isempty(newLogNames)
+                    %         warning(['No logs selected for file ', file.fileName, 'skipping...'])
+                    %         continue;
+                    %     end
+                    % 
+                    %     %Rename log files
+                    %     if length(newLogNames) == size(file.date,1)
+                    %         for k = 1:length(newLogNames)
+                    %             ext = strsplit(newLogNames{k},'.');
+                    %             saveName = ['Mouse-',obj.mouse,'-',datestr(file.date(k,:),obj.dateParser),'_',datestr(file.date(k,:),obj.timeParser),'-',file.experiment,'-log.',ext{end}];
+                    %             movefile([obj.rootFolder,filesep,file.folder,filesep,newLogNames{k}],[obj.rootFolder,filesep,file.folder,filesep,saveName])
+                    %         end
+                    %         obj.buildFolderStructure;
+                    %         tempLOGFileNames = cellfun(@(x) {x.fileName}, getAllFilesWithType(obj,'logs'),'UniformOutput',0);
+                    %         allLOGFileNames = cat(2,tempLOGFileNames{:});
+                    %         logNames = {};
+                    %         for k = 1:size(file.date,1)
+                    %             lName = ['Mouse-',obj.mouse,'-',datestr(file.date(k,:),obj.dateParser),'_',datestr(file.date(k,:),obj.timeParser),'-',file.experiment,'-log'];
+                    %             logNames = [logNames,allLOGFileNames(carpaUtilities.compareNamesTillExperiment(lName,allLOGFileNames,file.experiment))];
+                    %         end
+                    %     else
+                    %         logNames = newLogNames;
+                    %     end
+                    % end
+                    % logFiles = cellfun(@(x) [obj.rootFolder,filesep,file.folder,filesep,x], logNames, 'UniformOutput',0);
+                    % 
                     %% BEHAVIOR
                     behaviorNames = {};
                     for k = 1:size(file.date,1)
@@ -605,15 +607,15 @@ classdef carpa < handle
                             continue;
                         end
                         
-                        if length(newBehaviorNames) ~= length(logFiles)%size(file.date,1)
-                            
+                        if length(newBehaviorNames) ~= size(file.date,1)
+
                             box_text = {};
                             frames_logs = zeros([1,length(logFiles)]);
                             for log_k = 1:length(logFiles)
                                 [~, frames_logs(log_k)] = readFramesFromLog(logFiles{log_k});
                                 box_text = [box_text;[strrep(strrep(num2str(file.date(log_k,:)),'    ','.'),'..','.'),' : ',num2str(frames_logs(log_k))]];
                             end
-                            
+
                             box_text = [box_text;'---------------'];
                             frames_behavior = zeros([1,length(newBehaviorNames)]);
                             for beh_k = 1:length(newBehaviorNames)
@@ -621,11 +623,11 @@ classdef carpa < handle
                                 frames_behavior(beh_k) = mov_temp.NumberOfFrames;
                                 box_text = [box_text;[newBehaviorNames{beh_k},' : ',num2str(frames_behavior(beh_k))]];
                             end   
-                            
+
                             h2 = msgbox(box_text,'FRAMES IN LOGS AND BEHAVIOR:','Help');
-                            
+
                             %
-                            
+
                             if length(newBehaviorNames) > size(file.date,1) %Merge behaviors
                                 answer = questdlg('Merge or delete behavior files?','WARNING: More behavior than calcium frames','Merge','Delete','Skip','Merge');
                                 behavior_name_list = cellfun(@(x) fullfile(obj.rootFolder,file.folder,x),newBehaviorNames, 'UniformOutput',0);
@@ -633,15 +635,15 @@ classdef carpa < handle
                                     case 'Merge'
                                         new_behavFiles = carpaUtilities.merge_list(behavior_name_list,fullfile(obj.rootFolder,file.folder),obj.behaviorRegexp);
                                         behaviorFiles = new_behavFiles;
-                                        
+
                                     case 'Delete'
                                          new_behavFiles = carpaUtilities.delete_list(behavior_name_list,fullfile(obj.rootFolder,file.folder),obj.behaviorRegexp);
                                          behaviorFiles = new_behavFiles;
-                                        
+
                                     case 'Skip'
                                         continue
                                 end
-                                
+
                             elseif length(newBehaviorNames) < size(file.date,1) %Merge calcium
                                 answer = questdlg('Merge or delete calcium files?','WARNING: More calcium than behavior frames','Merge','Delete','Skip','Merge');
                                 switch answer
@@ -649,17 +651,17 @@ classdef carpa < handle
                                         disp('Merging calcium')
                                         new_logFiles = carpaUtilities.merge_list(logFiles,fullfile(obj.rootFolder,file.folder),obj.logRegexp);
                                         logFiles = new_logFiles; 
-                                        
+
                                     case 'Delete'
                                         deleted_logFiles = carpaUtilities.delete_list(logFiles,fullfile(obj.rootFolder,file.folder),obj.logRegexp);
                                         [~,idx] = setdiff(logFiles,deleted_logFiles);
-                                        
+
                                         new_logFiles = logFiles;
                                         for k = 1:length(idx)
                                             new_logFiles{idx(k)} = {new_logFiles{idx(k)}};
                                         end
                                         logFiles = new_logFiles; 
-                                        
+
                                     case 'Skip'
                                         continue
                                 end 
@@ -685,12 +687,12 @@ classdef carpa < handle
                         end
                     else
                         behaviorFiles = cellfun(@(x) [obj.rootFolder,filesep,file.folder,filesep,x], behaviorNames, 'UniformOutput',0);
-                    end
+                     end
                    
                     ALL(end+~isempty(fields(ALL))).extractFile = extractFile;
                     ALL(end).decisionsFile = decisionsFile;
                     ALL(end).dfofFile = dfofFile;
-                    ALL(end).logFiles = logFiles;
+                    % ALL(end).logFiles = logFiles;
                     ALL(end).behaviorFiles = behaviorFiles;
                 
                 end

@@ -4,7 +4,7 @@ classdef carpa < handle
         rootFolder;
         mouse;
         spatialDS = 4;
-        joinFileTreshold = 60; %Will join the concat files if they are closer than treshold (minutes). To not join put 0.
+        joinFileTreshold = 120; %Will join the concat files if they are closer than treshold (minutes). To not join put 0.
         analysisType = 'cellmax'; %'pcaica';
         archiveRawCaPath = '/archive/pjercog/Raw_Data_CalcImaging';
         showProcessed = 0;
@@ -436,51 +436,67 @@ classdef carpa < handle
             allBEHAVIORFileNames = cat(2,tempBEHAVIORFileNames{:});
             if isempty(allBEHAVIORFileNames);error('There are no behavior files in folder');end
 
-            tempLOGFiles = getAllFilesWithType(obj, 'logs');
+           tempLOGFiles = getAllFilesWithType(obj, 'logs');
             if isempty(tempLOGFiles)
                 % If no log files found, create a new log file in the same folder as 'obj'
                 extractedPart = '';
-                pattern = '(?<=^.*?-.*?)(\d{8}_\d{6})(?=-)';
+                pattern = '(?<=^.*?-.*?)(\d{8}_\d{6})(?=-)';  % Original pattern for basic case
+                
                 for day = 1:length(selectedFiles)
                     % Apply regexp to extract the desired part
+                    disp(class(selectedFiles{day}.fileName));
+                    
+                    % First, try to match the pattern for the first date-time string
                     matches = regexp(selectedFiles{day}.fileName, pattern, 'match');
+                    
+                    % If no match, try a more complex pattern for files with multiple time stamps
+                    if isempty(matches)
+                        pattern = '(?<=^.*?-.*?)(\d{8}_\d{6}(&\d{6})*)(?=-)';  % Modified pattern to account for multiple time components
+                        matches = regexp(selectedFiles{day}.fileName, pattern, 'match');
+                    end
+                    
                     % Check if the match was found
                     if ~isempty(matches)
-                        extractedPart = matches{1};
-                        disp(extractedPart);  % Output: 20220524_100253
-                        carpaUtilities.createLogFile(obj, matches{1});  % Pass 'obj' to the static method
+                        extractedPart = matches{1};  % Extract the part with date and time(s)
+                        disp(extractedPart);  % Output: 20220524_100253 or multiple time stamps
+                        
+                        % Now handle cases where there might be multiple time components
+                        timeParts = strsplit(extractedPart, '&');  % Split by '&' to get each time component
+                        
+                        % For simplicity, we'll take the first time component for date-time parsing
+                        firstTimePart = timeParts{1};
+                        
+                        % Extract date and time from the matched string (we'll only use the first time component here)
+                        dateStr = firstTimePart(1:8);  % '20220524'
+                        timeStr = firstTimePart(10:end);  % '100253'
+                        
+                        % Parse the date and time into separate components
+                        year = str2double(dateStr(1:4));  % '2022'
+                        month = str2double(dateStr(5:6));  % '05'
+                        dayStr = str2double(dateStr(7:8));  % '24'
+                        
+                        hour = str2double(timeStr(1:2));  % '10'
+                        minute = str2double(timeStr(3:4));  % '02'
+                        second = str2double(timeStr(5:6));  % '53'
+                        
+                        % Create the final date-time array
+                        dateTimeArray = [year, month, dayStr, hour, minute, second];
+            
+                        % Create the log entry in the appropriate structure
+                        obj.folderStruct(day).logs(end+1).date = dateTimeArray;
+                        obj.folderStruct(day).logs(end).folder = obj.folderStruct.folderName;
+                        obj.folderStruct(day).logs(end).experiment = obj.folderStruct.experiment;
+                        obj.folderStruct(day).logs(end).fileName = sprintf('Mouse-%s-%s-%s-log.xml', obj.folderStruct.mouse, extractedPart, obj.folderStruct.experiment);
+                        % obj.folderStruct(day).logs(end).dispName = ['log_','day:',dateStr,'_sess:',char(join(sessions,'-'))];
+                        obj.folderStruct(day).logs(end).dispName = ['log_','day:',dateStr,'_sess:',timeStr];
                     else
                         disp('No date and time string found');
                     end
-                    
+            
                     disp('No log files found. A new log file has been created.');
-
-
-                    % Extract date and time from the matched string
-                    dateStr = extractedPart(1:8);  % '20220524'
-                    timeStr = extractedPart(10:end);  % '100253'
-                    
-                    % Parse the date and time into separate components
-                    year = str2double(dateStr(1:4));  % '2022'
-                    month = str2double(dateStr(5:6));  % '05'
-                    dayStr = str2double(dateStr(7:8));  % '24'
-                    
-                    hour = str2double(timeStr(1:2));  % '10'
-                    minute = str2double(timeStr(3:4));  % '02'
-                    second = str2double(timeStr(5:6));  % '53'
-                    
-                    % Create the final date-time array
-                    dateTimeArray = [year, month, dayStr, hour, minute, second];
-    
-                    obj.folderStruct(day).logs(end+1).date = dateTimeArray;
-                    obj.folderStruct(day).logs(end).folder = obj.folderStruct.folderName;
-                    obj.folderStruct(day).logs(end).experiment = obj.folderStruct.experiment;
-                    obj.folderStruct(day).logs(end).fileName = sprintf('Mouse-%s-%s-%s-log.xml', obj.folderStruct.mouse,extractedPart,obj.folderStruct.experiment);
-                    % obj.folderStruct(day).logs(end).dispName = ['log_','day:',dateStr,'_sess:',char(join(sessions,'-'))];
-                    obj.folderStruct(day).logs(end).dispName = ['log_','day:',dateStr,'_sess:',timeStr];
-
                 end
             end
+
             pause(1);  % Pause for 1 second to ensure file creation
             tempLOGFiles = getAllFilesWithType(obj, 'logs');
             tempLOGFileNames = cellfun(@(x) {x.fileName}, tempLOGFiles,'UniformOutput',0);
@@ -723,6 +739,8 @@ classdef carpa < handle
         
         function preprocessConcatDay(obj,files)
             joinedSessionsIdx = ones([1,length(files)]);%Sessions with the same number will be joined
+            disp('Concatenating files now...');
+
             for k = 1:(length(files)-1)
                 if etime(files(k+1).date,files(k).date)/60 > obj.joinFileTreshold
                     joinedSessionsIdx(k+1:end) = joinedSessionsIdx(k+1:end)+1;
